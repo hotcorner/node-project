@@ -3,7 +3,11 @@ const router = express.Router();
 
 // Do work here
 router.get('/', (req, res) => {
-  res.send('Hey! It works!');
+  res.render('hello', {
+  	name: '',
+  	dog: req.query.dog,
+  	title: 'I love food',
+  });
 });
 
 module.exports = router;
