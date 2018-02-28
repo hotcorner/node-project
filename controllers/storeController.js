@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 const multer = require('multer');
 const jimp = require('jimp');
-const uuid = require('uuid');
+const uuidv4 = require('uuid/v4');
 
 const multerOptions = {
 	storage: multer.memoryStorage(),
@@ -31,7 +31,7 @@ exports.resize = async (req, res, next) => {
 		return;
 	}
 	const extension = req.file.mimetype.split('/')[1];
-	req.body.photo = `${uuid.v4()}.${extension}`;
+	req.body.photo = `${uuidv4()}.${extension}`;
 	const photo = await jimp.read(req.file.buffer);
 	await photo.resize(800, jimp.AUTO);
 	await photo.write(`./public/uploads/${req.body.photo}`);
@@ -78,7 +78,10 @@ exports.viewStore = async (req, res, next) => {
 }
 
 exports.getStoresByTag = async (req, res) => {
-	const tags = await Store.getTagsList();
-	const tag = req.params.tag
-	res.render('tags', {title: 'Tags', tags, tag})
+	const tag = req.params.tag;
+	const tagQ = tag || { $exists: true };
+	const tagsPromise = Store.getTagsList();
+	const storesPromise = Store.find({ tags: tagQ });
+	const [tags, stores] = await Promise.all([tagsPromise, storesPromise]);
+	res.render('tags', {title: 'Tags', tags, tag, stores});
 }
