@@ -2,7 +2,6 @@ extends layout
 
 block content
 	.inner
-		pre= h.dump(body)
 		form.form(action="/register" method="POST")
 			h2 Register
 			label(for="name") Name
@@ -13,5 +12,5 @@ block content
 			input(type="password" name="password" required)
 			label(for="password-confirm") Confirm Password
 			input(type="password" name="password-confirm" required)
-			input.button(type="submit" value="Register")
+			input.button(type="submit" value="Register") 
 
