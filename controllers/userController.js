@@ -41,7 +41,7 @@ exports.register = async (req, res, next) => {
 				next();
 			},
 			function rejected(err){
-				req.flash('error', 'That email address is already being used. Please try another.');
+				req.flash('error', 'That email address is already being used.');
 				res.render('register', {title: 'Register', flashes: req.flash()});
 			}
 		);
