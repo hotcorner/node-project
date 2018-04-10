@@ -35,6 +35,7 @@
     border:0;
     &:hover {
       color: $yellow;
+      cursor: pointer;
     }
   }
   &:after {
