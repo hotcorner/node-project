@@ -39,10 +39,30 @@ exports.register = async (req, res, next) => {
 	.then(
 		function fulfilled(){
 			next();
+			return;
 		},
 		function rejected(err){
 			req.flash('error', 'That email address is already being used.');
 			res.render('register', {title: 'Register', flashes: req.flash()});
 		}
 	);
+}
+
+exports.account = (req, res) => {
+	res.render('account', {title: 'Your Account'});
+}
+
+exports.accountUpdate = async (req, res) => {
+	const updates = {
+		name: req.body.name,
+		email: req.body.email
+	};
+
+	const user = await User.findOneAndUpdate(
+		{ _id: req.user._id }, 
+		{ $set: updates },
+		{ new: true, runValidators: true, context: 'query' }
+	);
+	req.flash('success', 'Update successful!')
+	res.redirect('back');
 }
