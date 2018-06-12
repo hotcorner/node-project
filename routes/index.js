@@ -39,5 +39,6 @@ router.post('/account/forgot', catchErrors(authController.forgot));
 router.get('/account/reset/:token', catchErrors(authController.reset));
 router.post('/account/reset/:token', authController.confirmPasswords, catchErrors(authController.updatePassword));
 router.get('/api/search', catchErrors(storeController.searchStores));
-router.get('/api/stores/near', catchErrors(storeController.mapStores) );
+router.get('/api/stores/near', catchErrors(storeController.mapStores));
+router.get('/map', storeController.mapPage);
 module.exports = router;
