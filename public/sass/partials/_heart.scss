@@ -4,9 +4,13 @@
     border: 0;
     outline: 0;
     position: relative;
+    &:hover {
+      cursor: pointer;
+    }
     &:after {
       content: '♥️';
-      font-size: 20px;
+      color: red;
+      font-size: 40px;
       position: absolute;
       opacity: 0;
       top: 0;
